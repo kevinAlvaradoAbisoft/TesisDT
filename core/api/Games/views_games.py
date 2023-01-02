@@ -13,21 +13,14 @@ from core.erp.models import *
 from core.homepage.models import *
 from core.api.User.serializers_user import UserSerializer,UserTokenSerializerJWT,CustomUserSerializer
 from core.api.Games.serializers_games import *
+from django.shortcuts import get_object_or_404
+from django.http import Http404
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics
 
-class GameViewSet(viewsets.GenericViewSet):
+class GameViewSet(generics.ListAPIView):
     model = GameFootball
     serializer_class = GameSerializer
-
-    def get_queryset(self):
-        if self.queryset is None:
-            self.queryset = self.model.objects.all()
-        return self.queryset
-    
-    def list(self,request):
-        user = self.get_queryset()
-        if user:
-            company_serializer = self.serializer_class(user,many=True)
-            return Response(company_serializer.data, status = status.HTTP_200_OK)
-        return Response({"message":"No hay ninguna usuario"}, status = status.HTTP_400_BAD_REQUEST)
-
-
+    queryset = GameFootball.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['referee_id','refereeAssistantOne_id','refereeAssistantTwo_id','teamLocal','teamVisitor','stadium']

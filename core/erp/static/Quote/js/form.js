@@ -68,6 +68,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
 });
 
 $(function () {
-
+    date_current = new moment().format("YYYY-MM-DD");
+    $('#date').datetimepicker({
+        format: 'YYYY-MM-DD',
+        minDate: date_current,
+    });
 });
 

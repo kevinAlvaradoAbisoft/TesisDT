@@ -10,10 +10,10 @@ router = DefaultRouter()
 router.register(r'UsersApi', UserViewSet, basename='UsersApi')
 router.register(r'Client', ClientViewSet, basename='Client')
 router.register(r'Company', CompanyViewSet, basename='Company')
-router.register(r'Games', GameViewSet, basename='games')
 
 urlpatterns = [
     path('', include(router.urls), name="ViewApi"),
     path('Login/', Login.as_view(), name="Login"),
     path('Logout/', Logout.as_view(), name="Logout"),
+    path('Games/', GameViewSet.as_view(), name="games"),
 ]
